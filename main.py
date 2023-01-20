@@ -4,6 +4,7 @@ from instagrapi import Client
 
 class Inst_Tools:
 
+    folder = "files"
     file_name="current_followers.txt"
 
     app = Client()
@@ -16,14 +17,14 @@ class Inst_Tools:
 
     def get_followers(self):
 
-        os.system(f"copy {Inst_Tools.file_name} backup_followers.txt")
-        os.system(f"copy {Inst_Tools.file_name} old_followers.txt")
-        os.system(f"del /Q {Inst_Tools.file_name}")
+        os.system(f"copy {path}/{Inst_Tools.file_name} {path}/backup_followers.txt")
+        os.system(f"copy {path}/{Inst_Tools.file_name} {path}/old_followers.txt")
+        os.system(f"del /Q {path}/{Inst_Tools.file_name}")
     
         Inst_Tools.app.login(self.username, self.password)
         usernames = Inst_Tools.app.user_followers(self.ig_account_id)
         
-        file = open(f"{Inst_Tools.file_name}", "a")
+        file = open(f"{path}/{Inst_Tools.file_name}", "a")
 
         for i in usernames:
             a = str(usernames[i])
@@ -35,8 +36,8 @@ class Inst_Tools:
 
         file.close()
 
-        old = open("old_followers.txt").readlines()
-        new = open(Inst_Tools.file_name).readlines()
+        old = open(f"{path}/old_followers.txt").readlines()
+        new = open(f"{path}/{Inst_Tools.file_name}").readlines()
         old_2 = []
         new_2 = []
 
@@ -55,13 +56,13 @@ class Inst_Tools:
 
 
     def total_followers(self):
-        file = open(f"{Inst_Tools.file_name}", "r")
+        file = open(f"{path}/{Inst_Tools.file_name}", "r")
         c = len(file.readlines())
         return c
 
 
     def check_if_follow(self, query):
-        file = open(f"{Inst_Tools.file_name}", "r")
+        file = open(f"{path}/{Inst_Tools.file_name}", "r")
         
         for i in file.readlines():
             if query == i.split("\n")[0]:
